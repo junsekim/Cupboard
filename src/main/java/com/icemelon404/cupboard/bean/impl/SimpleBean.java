@@ -11,7 +11,7 @@ public class SimpleBean implements Bean {
     private BeanCreationPolicy createPolicy;
     private String beanName;
 
-    public SimpleBean(ObjectFactory objectFactory, BeanCreationPolicy createPolicy) {
+    public SimpleBean(ObjectFactory objectFactory, BeanCreationPolicy createPolicy, String beanName) {
         this.objectFactory = objectFactory;
         this.createPolicy = createPolicy;
     }

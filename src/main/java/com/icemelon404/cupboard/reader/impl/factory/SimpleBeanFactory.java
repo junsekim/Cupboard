@@ -12,6 +12,6 @@ public class SimpleBeanFactory implements AnnotatedBeanFactory {
 
     @Override
     public Bean createBean(ObjectFactory factory, Annotation[] annotations) {
-        return new SimpleBean(factory, new SingletonPolicy());
+        return new SimpleBean(factory, new SingletonPolicy(), factory.getType().getSimpleName());
     }
 }
