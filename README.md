@@ -59,9 +59,9 @@ SimpleBeanSource - BeanReader 을 이용해 읽어온 빈들을 관리하고, �
 
 ```java
 TestComponent bean = source.requestBean(TestComponent.class);
-TestComponent namedBean = source.requestBean(TestComponent.class, "SomeBeanName");
+TestComponent namedBean = source.requestBean(TestComponent.class, "TestComponent");
 ```
-객체 타입과 빈 생성시에 제공하는 이름을 통해 객체를 요청할 수 있습니다.  
+객체 타입과 빈 생성시에 제공하는 이름을 통해 객체를 요청할 수 있습니다. (빈 이름은 명시하지 않으면 클래스 이름과 동일합니다)  
 적절한 객체를 찾지 못했을 경우 BeanNotFoundException 이 던져집니다.
 
 # Warning
