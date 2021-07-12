@@ -86,6 +86,6 @@ public class ReflectionUtils {
 
     private static String extractClassNameFromFileName(String fileName) {
         int extensionLength = 6;
-        return fileName.substring(0, fileName.length() - extensionLength));
+        return fileName.substring(0, fileName.length() - extensionLength);
     }
 }
