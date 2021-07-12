@@ -3,6 +3,45 @@ Spring Framework 의 DI 와 유사한 기능을 제공하는 것을 목표로 �
 
 # Simple Usage
 
+- 어노테이션을 이용해 컴포넌트 클래스 마킹
+
+```java
+package integeration.components;
+
+import com.icemelon404.cupboard.annotations.Component;
+
+@Component
+public class TestComponent extends TestParent implements TestInterface {
+
+    public TestComponent2 component2;
+    public TestComponent3 component3;
+
+    public TestComponent(TestComponent2 component2, TestComponent3 component3) {
+        this.component2 = component2;
+        this.component3 = component3;
+    }
+}
+```
+```java
+package integeration.components;
+
+import com.icemelon404.cupboard.annotations.Component;
+
+@Component
+public class TestComponent2 {
+}
+```
+```java
+package integeration.components;
+
+import com.icemelon404.cupboard.annotations.Component;
+
+@Component
+public class TestComponent3 {
+}
+```
+</br>
+
 - 빈 소스 생성
 ```java
 ClassScanner scanner = new AnnotatedClassScanner(Arrays.asList("integeration.components"), Component.class);
