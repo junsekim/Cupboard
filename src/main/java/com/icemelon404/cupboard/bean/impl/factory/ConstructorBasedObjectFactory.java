@@ -1,15 +1,12 @@
 package com.icemelon404.cupboard.bean.impl.factory;
 
-import com.icemelon404.cupboard.bean.BeanProfile;
 import com.icemelon404.cupboard.bean.BeanSource;
 import com.icemelon404.cupboard.bean.impl.ObjectFactory;
 import com.icemelon404.cupboard.exception.BeanCreationFailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 
 public class ConstructorBasedObjectFactory implements ObjectFactory {
 
@@ -37,7 +34,7 @@ public class ConstructorBasedObjectFactory implements ObjectFactory {
                 logger.error("Error while creating object with constructor. Object type: {}", classType.getSimpleName());
             }
         }
-        throw new BeanCreationFailException("Proper constructor is not found");
+        throw new BeanCreationFailException("Cannot find proper constructor");
     }
 
     @Override

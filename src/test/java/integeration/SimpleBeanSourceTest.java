@@ -12,9 +12,6 @@ import com.icemelon404.cupboard.reader.impl.scanner.AnnotatedClassScanner;
 import integeration.components.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 
 public class SimpleBeanSourceTest {
@@ -62,5 +59,4 @@ public class SimpleBeanSourceTest {
         BeanReader reader = new ComponentScanner(scanner, new SimpleBeanFactory());
         return new SimpleBeanSource(reader);
     }
-
 }
