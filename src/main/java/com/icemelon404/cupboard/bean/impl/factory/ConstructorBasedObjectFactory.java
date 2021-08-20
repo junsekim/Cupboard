@@ -6,12 +6,11 @@ import com.icemelon404.cupboard.exception.BeanCreationFailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class ConstructorBasedObjectFactory implements ObjectFactory {
 
-    private Class<?> classType;
-    private Logger logger = LoggerFactory.getLogger(ConstructorBasedObjectFactory.class);
+    private final Class<?> classType;
+    private final Logger logger = LoggerFactory.getLogger(ConstructorBasedObjectFactory.class);
 
     public ConstructorBasedObjectFactory(Class<?> classType) {
         this.classType = classType;
@@ -20,21 +19,28 @@ public class ConstructorBasedObjectFactory implements ObjectFactory {
     @Override
     public Object createObject(BeanSource source) {
         Constructor<?>[] constructors = classType.getConstructors();
-        for (Constructor constructor : constructors) {
-            Class<?>[] params = constructor.getParameterTypes();
-            Object[] paramObjects = new Object[constructor.getParameterCount()];
-            int idx = 0;
-            for (Class<?> paramType : params) {
-                paramObjects[idx] = source.requestBean(paramType);
-                idx++;
-            }
-            try {
-                return constructor.newInstance(paramObjects);
-            } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {
-                logger.error("Error while creating object with constructor. Object type: {}", classType.getSimpleName());
-            }
+        for (Constructor<?> constructor : constructors) {
+            Object obj = callConstructor(source, constructor);
+            if (obj != null)
+                return obj;
         }
         throw new BeanCreationFailException("Cannot find proper constructor");
+    }
+
+    private Object callConstructor(BeanSource beanSource, Constructor<?> constructor) {
+        Class<?>[] params = constructor.getParameterTypes();
+        Object[] paramObjects = new Object[constructor.getParameterCount()];
+        int idx = 0;
+        try {
+            for (Class<?> paramType : params) {
+                paramObjects[idx] = beanSource.requestBean(paramType);
+                idx++;
+            }
+            return constructor.newInstance(paramObjects);
+        } catch (Exception e) {
+            logger.debug("Exception while creating object", e);
+            return null;
+        }
     }
 
     @Override
