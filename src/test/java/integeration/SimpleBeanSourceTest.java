@@ -54,6 +54,15 @@ public class SimpleBeanSourceTest {
         });
     }
 
+    @Test
+    public void createPerRequestTest_Success() {
+        BeanSource source = createTestSource();
+        CreatePerRequestComponent first = source.requestBean(CreatePerRequestComponent.class);
+        CreatePerRequestComponent second = source.requestBean(CreatePerRequestComponent.class);
+        Assertions.assertNotEquals(first, second);
+    }
+
+
     private BeanSource createTestSource() {
         ClassScanner scanner = new AnnotatedClassScanner(Arrays.asList("integeration.components"), Component.class);
         BeanReader reader = new ComponentScanner(scanner, new SimpleBeanFactory());
