@@ -62,6 +62,29 @@ public class SimpleBeanSourceTest {
         Assertions.assertNotEquals(first, second);
     }
 
+    @Test
+    public void requestByTypeAndName_Success() {
+        BeanSource beanSource = createTestSource();
+        NamedComponent component = beanSource.requestBean(NamedComponent.class, "ComponentName");
+        Assertions.assertNotNull(component);
+    }
+
+
+    @Test
+    public void requestNamedComponentByType_Success() {
+        BeanSource beanSource = createTestSource();
+        NamedComponent component = beanSource.requestBean(NamedComponent.class);
+        Assertions.assertNotNull(component);
+    }
+
+    @Test
+    public void requestByTypeAndName_Fail() {
+        BeanSource beanSource = createTestSource();
+        Assertions.assertThrows(BeanNotFoundException.class, () -> {
+            beanSource.requestBean(NamedComponent.class, "NonMatchingName");
+        });
+
+    }
 
     private BeanSource createTestSource() {
         ClassScanner scanner = new AnnotatedClassScanner(Arrays.asList("integeration.components"), Component.class);

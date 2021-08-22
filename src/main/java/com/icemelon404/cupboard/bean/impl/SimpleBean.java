@@ -14,6 +14,7 @@ public class SimpleBean implements Bean {
     public SimpleBean(ObjectFactory objectFactory, BeanCreationPolicy createPolicy, String beanName) {
         this.objectFactory = objectFactory;
         this.createPolicy = createPolicy;
+        this.beanName = beanName;
     }
 
     @Override
@@ -27,8 +28,6 @@ public class SimpleBean implements Bean {
         Class<?> beanType = objectFactory.getType();
         if (!ReflectionUtils.isEqualOrSuperTypeOf(profileType, beanType))
             return false;
-        if (profile.hasName() && !beanName.equals(profile.getBeanName()))
-            return false;
-        return true;
+        return !profile.hasName() || beanName.equals(profile.getBeanName());
     }
 }
