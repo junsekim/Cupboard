@@ -8,6 +8,7 @@ public class BeanProfile {
     public BeanProfile(Class<?> classType, String beanName) {
         this.classType = classType;
         this.beanName = beanName;
+        this.hasName = true;
     }
 
     public BeanProfile(Class<?> classType) {

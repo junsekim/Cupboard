@@ -1,5 +1,6 @@
 package com.icemelon404.cupboard.reader.impl.factory;
 
+import com.icemelon404.cupboard.annotations.Component;
 import com.icemelon404.cupboard.annotations.Policy;
 import com.icemelon404.cupboard.bean.Bean;
 import com.icemelon404.cupboard.bean.impl.BeanCreationPolicy;
@@ -15,7 +16,7 @@ public class SimpleBeanFactory implements AnnotatedBeanFactory {
 
     @Override
     public Bean createBean(ObjectFactory factory, Annotation[] annotations) {
-        return new SimpleBean(factory, getPolicy(annotations), factory.getType().getSimpleName());
+        return new SimpleBean(factory, getPolicy(annotations), getName(annotations, factory.getType()));
     }
 
     private BeanCreationPolicy getPolicy(Annotation[] annotations) {
@@ -26,5 +27,18 @@ public class SimpleBeanFactory implements AnnotatedBeanFactory {
             }
         }
         return new SingletonPolicy();
+    }
+
+    private String getName(Annotation[] annotations, Class<?> type) {
+        for (Annotation annotation : annotations) {
+            if (annotation.annotationType().equals(Component.class)) {
+                Component component = (Component) annotation;
+                String name = component.name();
+                if (name.isEmpty())
+                    break;
+                return name;
+            }
+        }
+        return type.getSimpleName();
     }
 }
